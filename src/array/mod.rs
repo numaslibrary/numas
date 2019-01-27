@@ -1,5 +1,4 @@
 mod array;
-mod strip;
 mod shape;
 
 pub use self::array::Array;
