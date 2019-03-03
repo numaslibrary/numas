@@ -1,19 +1,14 @@
 use std::cmp;
 use array::Shape;
 
-pub struct Array<T> {
+pub struct Array<T: Sized> {
     pub data: Vec<T>,
-    pub shape: Shape,
-    pub data_type: String,
+    pub shape: Shape
 }
 
-impl <T> Array<T> {
-    pub fn new(data: Vec<T>, shape: Vec<i32>, data_type : String) -> Array<T> {
-        Array {
-            data,
-            shape: Shape::new(shape),
-            data_type,
-        }
+impl <T: Sized> Array<T> {
+    pub fn new(data: Vec<T>, shape: Vec<i32>) -> Array<T> {
+        Array { data, shape: Shape::new(shape) }
     }
 
     pub fn set_shape(&mut self, shape: Vec<i32>) -> () {
@@ -37,5 +32,9 @@ impl <T> Array<T> {
         for (index, value) in values.drain(range).enumerate() {
             self.data[start + index] = value;
         }
+    }
+
+    pub fn len(self) -> usize {
+        return self.data.len();
     }
 }
