@@ -1,5 +1,5 @@
 use std::cmp;
-use array::Shape;
+use shape::Shape;
 
 pub struct Array<T: Sized> {
     pub data: Vec<T>,

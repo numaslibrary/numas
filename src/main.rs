@@ -1,4 +1,8 @@
 mod array;
+mod shape;
+mod mathematic;
+mod operator;
+mod factory;
 
 use array::Array;
 

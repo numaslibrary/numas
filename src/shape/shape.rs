@@ -25,7 +25,6 @@ impl Shape {
     }
 
 
-
     /// Returns new Shape
     ///
     /// # Arguments
@@ -56,6 +55,10 @@ impl Shape {
 
 
     /// Returns real index in linear array and number of elements
+    ///
+    /// # Arguments
+    ///
+    /// * `indices` - Indices
     pub fn get_index(&self, indices: Vec<usize>) -> (usize, usize) {
         let start = indices.iter()
             .zip(self.strides.iter())
