@@ -71,4 +71,17 @@ impl Shape {
 
         return (start, count);
     }
+
+    /// Returns total number of elements from shape
+    ///
+    /// # Arguments
+    ///
+    /// * `shape` - Shape vector
+    pub fn total_len(shape: Vec<i32>) -> i32 {
+        if shape.len() == 0 {
+            return 0;
+        }
+
+        return shape.iter().fold(1, |total, &value| total * value);
+    }
 }
