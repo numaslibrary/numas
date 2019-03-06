@@ -77,7 +77,7 @@ impl Shape {
     /// # Arguments
     ///
     /// * `shape` - Shape vector
-    pub fn total_len(shape: Vec<i32>) -> i32 {
+    pub fn total_len(shape: &Vec<i32>) -> i32 {
         if shape.len() == 0 {
             return 0;
         }
