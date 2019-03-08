@@ -3,12 +3,19 @@ use shape::Shape;
 
 pub struct Array<T: Sized> {
     pub data: Vec<T>,
-    pub shape: Shape
+    pub shape: Shape,
+    pub bounds: Vec<usize>,
 }
 
 impl <T: Sized> Array<T> {
+    pub fn new_bounded(data: Vec<T>, shape: Vec<i32>, bounds: Vec<usize>) -> Array<T> {
+        Array { data, shape: Shape::new(shape), bounds }
+    }
+
     pub fn new(data: Vec<T>, shape: Vec<i32>) -> Array<T> {
-        Array { data, shape: Shape::new(shape) }
+        let length = data.len();
+
+        return Array::new_bounded(data, shape, vec![0, length])
     }
 
     pub fn set_shape(&mut self, shape: Vec<i32>) -> () {
@@ -35,6 +42,6 @@ impl <T: Sized> Array<T> {
     }
 
     pub fn len(self) -> usize {
-        return self.data.len();
+        return self.bounds.len();
     }
 }
