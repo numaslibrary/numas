@@ -1,3 +1,3 @@
 mod random;
-mod fill;
+pub mod fill;
 mod numeric;
