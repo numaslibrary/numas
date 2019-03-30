@@ -1,7 +1,12 @@
+use std::ops::Range;
+
 /// Array Shape Structure
+#[derive(Clone)]
 pub struct Shape {
     shape: Vec<i32>,
     strides: Vec<usize>,
+    start: usize,
+    end: usize,
 }
 
 
@@ -24,18 +29,24 @@ impl Shape {
         return products;
     }
 
-
     /// Returns new Shape
     ///
     /// # Arguments
     ///
     /// * `shape` - Initial shape matrix
-    pub fn new(shape: Vec<i32>) -> Shape {
-        let products = Shape::calculate_strides(&shape);
+    pub fn new(shape: Vec<i32>, start: usize, end: usize) -> Shape {
+        let strides = Shape::calculate_strides(&shape);
 
-        return Shape { strides: products, shape };
+        if Shape::len(&shape, &strides) != (end - start) as i32 {
+            panic!(
+                "Invalid shape given: shape size {}, data size {}",
+                Shape::len(&shape, &strides),
+                end - start
+            );
+        }
+
+        return Shape { strides, shape, start, end };
     }
-
 
     /// Sets shape
     ///
@@ -47,12 +58,10 @@ impl Shape {
         self.shape = shape;
     }
 
-
     /// Returns shape
     pub fn get_shape(&self) -> &Vec<i32> {
         return &self.shape;
     }
-
 
     /// Returns real index in linear array and number of elements
     ///
@@ -69,19 +78,42 @@ impl Shape {
         let count = self.shape[range].iter()
             .fold(1, |index, &value| index * value) as usize;
 
-        return (start, count);
+        return (start + &self.start, count);
+    }
+
+    /// Converts vector of indices to one index in linear array
+    ///
+    /// # Arguments
+    ///
+    /// * `indices` - Indices
+    pub fn to_index(&self, indices: &Vec<usize>) -> usize {
+        return indices.iter()
+            .zip(self.strides.iter())
+            .fold(0, |acc, (&i, &s)| acc + i * s);
+    }
+
+    /// Returns bounds of shape
+    pub fn get_bounds(&self) -> Range<usize> {
+        return self.start..self.end;
+    }
+
+    /// Returns total number of elements from shape and strides
+    ///
+    /// # Arguments
+    ///
+    /// * `shape` - shape vector
+    /// * `strides` - strides vector
+    #[inline]
+    fn len(shape: &Vec<i32>, strides: &Vec<usize>) -> i32 {
+        return shape[0] * strides[0] as i32;
     }
 
     /// Returns total number of elements from shape
     ///
     /// # Arguments
     ///
-    /// * `shape` - Shape vector
-    pub fn total_len(shape: &Vec<i32>) -> i32 {
-        if shape.len() == 0 {
-            return 0;
-        }
-
-        return shape.iter().fold(1, |total, &value| total * value);
+    /// * `shape` - Array shape
+    pub fn total_len(shape: &Shape) -> i32 {
+        return Shape::len(&shape.shape, &shape.strides);
     }
 }
