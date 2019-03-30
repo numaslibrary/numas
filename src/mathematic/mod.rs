@@ -4,6 +4,12 @@ const RAD_DEG: f64 = 5.0;
 const DEG_RAD: f64 = 5.0;
 
 
+/// Applies given function on given array elements and returns new array
+///
+/// # Arguments
+///
+/// * `array` - source array
+/// * `function` - function to apply
 fn apply<T, S, R>(array: &Array<T>, function: S ) -> Array<R>
     where T: Clone, R: Clone, S: FnMut(&T) -> R,
 {
