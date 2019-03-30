@@ -1,35 +1,55 @@
+extern crate rand;
+
+use self::rand::{
+    distributions::Uniform,
+    Rng,
+};
+
+use std::iter;
 use array::Array;
+use rand::distributions::Distribution;
 
 
-fn random(shape: Vec<i32>) -> Array<i32> {
-    return Array::new(vec![1, 2, 3], shape);
+/// Creates new array of given shape filled with random values from given distribution
+///
+/// # Arguments
+///
+/// * `distr` - distribution of random values
+/// * `shape` - shape of new array
+pub fn random_from_distribution<T, D>(distr: D, shape: Vec<i32>) -> Array<T>
+    where T: Clone, D: Distribution<T>
+{
+    let mut rng = rand::thread_rng();
+
+    let len: i32 = shape.iter().product();
+    let data: Vec<T> = (0..len).map(|_| rng.sample(&distr)).collect();
+
+    return Array::new(data, shape);
 }
 
-fn random_long(shape: Vec<i32>) -> Array<i64> {
-    return Array::new(vec![1, 2, 3], shape);
+/// Creates new array of given shape filled with random values between given range
+///
+/// # Arguments
+///
+/// * `from` - start of range
+/// * `to` - end of range
+/// * `shape` - shape of new array
+#[inline]
+pub fn random_range<T>(from: T, to: T, shape: Vec<i32>) -> Array<T>
+    where T: rand::distributions::uniform::SampleUniform + Clone
+{
+    return random_from_distribution(Uniform::new::<T, T>(from, to), shape);
 }
 
-fn random_float(shape: Vec<i32>) -> Array<f32> {
-    return Array::new(vec![1.0, 2.0, 3.0], shape);
+/// Creates new array of given shape filled with random values from between 0 and 1 (floating point numbers only)
+///
+/// # Arguments
+///
+/// * `shape` - shape of new array
+#[inline]
+pub fn random<T>(shape: Vec<i32>) -> Array<T>
+    where T: rand::distributions::uniform::SampleUniform + From<u8> + Clone
+{
+    return random_range::<T>(T::from(0), T::from(1), shape);
 }
 
-fn random_double(shape: Vec<i32>) -> Array<f64> {
-    let random_data = vec![1.0, 2.0, 3.0];
-    return Array::new(random_data, shape);
-}
-
-fn random_range(from: i32, to: i32, shape: Vec<i32>) -> Array<i32> {
-    return Array::new(vec![1, 2, 3], shape);
-}
-
-fn random_long_range(from: i64, to: i64, shape: Vec<i32>) -> Array<i64> {
-    return Array::new(vec![1, 2, 3], shape);
-}
-
-fn random_float_range(from: f32, to: f32, shape: Vec<i32>) -> Array<f32> {
-    return Array::new(vec![1.0, 2.0, 3.0], shape);
-}
-
-fn random_double_range(from: f64, to: f64, shape: Vec<i32>) -> Array<f64> {
-    return Array::new(vec![1.0, 2.0, 3.0], shape);
-}
