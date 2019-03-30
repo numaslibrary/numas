@@ -1,60 +1,110 @@
-//use array::Array;
+use array::Array;
 
-//    / Returns new array with sinus function applied on every element of the input array
-//    /
-//    / # Arguments
-//    /
-//    / * `array` - An Array<T> to
-//    /
-//    / # Example
-//    /
-//    / ```
-//    / ```
-//fn sin(array: Array<T>) -> Array<f64> {
-//    let data: Vec<f64> = array.data.iter().map(|value| f64::sin(value)).to_vec();
-//    return Array { data, shap };
-//}
-//
-//fn cos(array: Array<T>) -> Array<f64> {
-//    return array;
-//}
-//
-//fn arcsin(array: Array<T>) -> Array<f64> {
-//    return array;
-//}
-//
-//fn arccos(array: Array<T>) -> Array<f64> {
-//    return array;
-//}
-//
-//fn arctan(array: Array<T>) -> Array<f64> {
-//    return array;
-//}
-//
-//fn hypot(array: Array<T>) -> Array<f64> {
-//    return array;
-//}
-//
-//fn arctan2(array: Array<T>) -> Array<f64> {
-//    return array;
-//}
-//
-//fn degrees(array: Array<T>) -> Array<f64> {
-//    return array;
-//}
-//
-//fn radians(array: Array<T>) -> Array<f64> {
-//    return array;
-//}
-//
-//fn unwrap(array: Array<T>) -> Array<f64> {
-//    return array;
-//}
-//
-//fn deg2rad(array: Array<T>) -> Array<f64> {
-//    return array;
-//}
-//
-//fn rad2deg(array: Array<T>) -> Array<f64> {
-//    return array;
-//}
+
+/// Applies sine on elements from given array and creates new array
+///
+/// # Arguments
+///
+/// * `array` - source array
+#[inline]
+pub fn sin<T>(array: &Array<T>) -> Array<f64>
+    where T: Clone + Into<f64>
+{
+    return super::apply(array, |value: &T| f64::sin(value.clone().into()));
+}
+
+/// Applies cosine on elements from given array and creates new array
+///
+/// # Arguments
+///
+/// * `array` - source array
+#[inline]
+pub fn cos<T>(array: &Array<T>) -> Array<f64>
+    where T: Clone + Into<f64>
+{
+    return super::apply(array, |value: &T| f64::cos(value.clone().into()));
+}
+
+/// Applies inverse sine on elements from given array and creates new array
+///
+/// # Arguments
+///
+/// * `array` - source array
+#[inline]
+pub fn arcsin<T>(array: &Array<T>) -> Array<f64>
+    where T: Clone + Into<f64>
+{
+    return super::apply(array, |value: &T| f64::asin(value.clone().into()));
+}
+
+/// Applies inverse cosine on elements from given array and creates new array
+///
+/// # Arguments
+///
+/// * `array` - source array
+#[inline]
+pub fn arccos<T>(array: &Array<T>) -> Array<f64>
+    where T: Clone + Into<f64>
+{
+    return super::apply(array, |value: &T| f64::acos(value.clone().into()));
+}
+
+/// Applies inverse tangent on elements from given array and creates new array
+///
+/// # Arguments
+///
+/// * `array` - source array
+#[inline]
+pub fn arctan<T>(array: &Array<T>) -> Array<f64>
+    where T: Clone + Into<f64>
+{
+    return super::apply(array, |value: &T| f64::atan(value.clone().into()));
+}
+
+/// Converts elements from given array to degrees and creates new array
+///
+/// # Arguments
+///
+/// * `array` - source array
+#[inline]
+pub fn degrees<T>(array: &Array<T>) -> Array<f64>
+    where T: Clone + Into<f64>
+{
+    return super::apply(array, |value: &T| f64::to_degrees(value.clone().into()));
+}
+
+/// Converts elements from given array to radians and creates new array
+///
+/// # Arguments
+///
+/// * `array` - source array
+#[inline]
+pub fn radians<T>(array: &Array<T>) -> Array<f64>
+    where T: Clone + Into<f64>
+{
+    return super::apply(array, |value: &T| f64::to_radians(value.clone().into()));
+}
+
+/// Converts elements from given array to degrees and creates new array
+///
+/// # Arguments
+///
+/// * `array` - source array
+#[inline]
+pub fn deg2rad<T>(array: &Array<T>) -> Array<f64>
+    where T: Clone + Into<f64>
+{
+    return radians(array);
+}
+
+/// Converts elements from given array to radians and creates new array
+///
+/// # Arguments
+///
+/// * `array` - source array
+#[inline]
+pub fn rad2deg<T>(array: &Array<T>) -> Array<f64>
+    where T: Clone + Into<f64>
+{
+    return degrees(array);
+}

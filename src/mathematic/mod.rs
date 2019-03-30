@@ -19,4 +19,4 @@ fn apply<T, S, R>(array: &Array<T>, function: S ) -> Array<R>
 
 mod unit_type;
 pub mod hyperbolic;
-mod trigonometric;
+pub mod trigonometric;
