@@ -1,38 +1,74 @@
 use array::Array;
 
 
-fn sinh<T>(array: Array<T>) -> Array<f64> {
-    let data = array.data.iter().map(|value| f64::sinh(value)).collect();
-
-    return Array::new(data, array.get_shape().clone());
+/// Applies hyperbolic sine on elements from given array and creates new array
+///
+/// # Arguments
+///
+/// * `array` - source array
+#[inline]
+pub fn sinh<T>(array: &Array<T>) -> Array<f64>
+    where T: Clone + Into<f64>
+{
+    return super::apply(array, |value: &T| f64::sinh(value.clone().into()));
 }
 
-fn cosh<T>(array: Array<T>) -> Array<f64> {
-    let data = array.data.iter().map(|value| f64::cosh(value)).collect();
-
-    return Array::new(data, array.get_shape().clone());
+/// Applies hyperbolic cosine on elements from given array and creates new array
+///
+/// # Arguments
+///
+/// * `array` - source array
+#[inline]
+pub fn cosh<T>(array: &Array<T>) -> Array<f64>
+    where T: Clone + Into<f64>
+{
+    return super::apply(array, |value: &T| f64::cosh(value.clone().into()));
 }
 
-fn tanh<T>(array: Array<T>) -> Array<f64> {
-    let data = array.data.iter().map(|value| f64::tanh(value)).collect();
-
-    return Array::new(data, array.get_shape().clone());
+/// Applies hyperbolic tangent on elements from given array and creates new array
+///
+/// # Arguments
+///
+/// * `array` - source array
+#[inline]
+pub fn tanh<T>(array: &Array<T>) -> Array<f64>
+    where T: Clone + Into<f64>
+{
+    return super::apply(array, |value: &T| f64::tanh(value.clone().into()));
 }
 
-fn arcsinh<T>(array: Array<T>) -> Array<f64> {
-    let data = array.data.iter().map(|value| f64::asinh(value)).collect();
-
-    return Array::new(data, array.get_shape().clone());
+/// Applies inverse hyperbolic sine on elements from given array and creates new array
+///
+/// # Arguments
+///
+/// * `array` - source array
+#[inline]
+pub fn arcsinh<T>(array: &Array<T>) -> Array<f64>
+    where T: Clone + Into<f64>
+{
+    return super::apply(array, |value: &T| f64::asinh(value.clone().into()));
 }
 
-fn arccosh<T>(array: Array<T>) -> Array<T> {
-    let data = array.data.iter().map(|value| f64::acosh(value)).collect();
-
-    return Array::new(data, array.get_shape().clone());
+/// Applies hyperbolic cosine on elements from given array and creates new array
+///
+/// # Arguments
+///
+/// * `array` - source array
+#[inline]
+pub fn arccosh<T>(array: &Array<T>) -> Array<f64>
+    where T: Clone + Into<f64>
+{
+    return super::apply(array, |value: &T| f64::acosh(value.clone().into()));
 }
 
-fn arctanh<T>(array: Array<T>) -> Array<T> {
-    let data = array.data.iter().map(|value| f64::atanh(value)).collect();
-
-    return Array::new(data, array.get_shape().clone());
+/// Applies hyperbolic tangent on elements from given array and creates new array
+///
+/// # Arguments
+///
+/// * `array` - source array
+#[inline]
+pub fn arctanh<T>(array: &Array<T>) -> Array<f64>
+    where T: Clone + Into<f64>
+{
+    return super::apply(array, |value: &T| f64::atanh(value.clone().into()));
 }
