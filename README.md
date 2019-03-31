@@ -1,14 +1,13 @@
 # numas
-
-Numas is Rust and WebAssembly library for numerical and scientific computing. It's designed to be similiar to NumPy (Python library).
+numas is Rust library for numerical computation and multidemnsional array support. It's heavily inspired by NumPy (Python library).
 
 ## Content
 
 Library contains:
-- Memory efficient array
-- Fast arithmetic on arrays
-
-## Usage
-
-
-## Authors
+- Multidimensional array support
+- Multidimensional view support
+- Random array generators
+- Array fillers and other factories
+- Hyperbolic functions for arrays
+- Trigonometric functions for arrays
+- Arithmetic functions for arrays
