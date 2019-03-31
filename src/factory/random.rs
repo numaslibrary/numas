@@ -1,13 +1,15 @@
 extern crate rand;
 
 use self::rand::{
-    distributions::Uniform,
+    distributions::{
+        Uniform,
+        Distribution,
+    },
     Rng,
 };
 
 use std::iter;
 use array::Array;
-use rand::distributions::Distribution;
 
 
 /// Creates new array of given shape filled with random values from given distribution
@@ -22,7 +24,7 @@ pub fn random_from_distribution<T, D>(distr: D, shape: Vec<i32>) -> Array<T>
     let mut rng = rand::thread_rng();
 
     let len: i32 = shape.iter().product();
-    let data: Vec<T> = (0..len).map(|_| rng.sample(&distr)).collect();
+    let data: Vec<T> = rng.sample_iter(&distr).take(len as usize).collect();
 
     return Array::new(data, shape);
 }
