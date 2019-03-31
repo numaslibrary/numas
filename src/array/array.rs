@@ -1,10 +1,12 @@
 use std::cmp;
-use shape::Shape;
-
 use std::fmt;
 use std::cell::RefCell;
 use std::rc::Rc;
 
+use shape::Shape;
+
+
+/// Array structure
 pub struct Array<T: Clone> {
     pub data: Rc<RefCell<Vec<T>>>,
     pub shape: Shape,
@@ -68,14 +70,22 @@ impl<T: Clone> Array<T> {
         self.shape.set_shape(shape);
     }
 
-    pub fn get_raw(&self, indices: Vec<usize>) -> Vec<T> {
+    /// Returns linear vector from given indices
+    ///
+    /// # Arguments
+    ///
+    /// * `indices` - vector of indices
+    pub fn get_raw(&self, indices: Vec<Vec<usize>>) -> Vec<T> {
         let (start, count) = self.shape.get_index(indices);
         let data = self.data.borrow().clone();
 
+        println!("{:?}", start);
+
+        println!("{:?}", count);
         return data[start..(count + start)].to_vec();
     }
 
-    pub fn set(&mut self, indices: Vec<usize>, mut values: Vec<T>) -> () {
+    pub fn set(&mut self, indices: Vec<Vec<usize>>, mut values: Vec<T>) -> () {
         let (start, count) = self.shape.get_index(indices);
         let range = 0..cmp::min(count, values.len());
         let mut data = self.data.borrow_mut();
@@ -85,13 +95,23 @@ impl<T: Clone> Array<T> {
         }
     }
 
-//    pub fn get(&self, indices: Vec<(usize, usize, usize)>) -> &[T] {
-//
-//    }
+    pub fn get(&self, indices: Vec<Vec<usize>>) -> Array<T> {
+        let mut use_view = true;
 
-//    pub fn collect(&mut self) -> [T] {
-//
-//    }
+        for (i, value) in indices.iter().skip(1).enumerate() {
+            if indices[i - 1].len() > indices[i].len() {
+                use_view = false;
+                break;
+            }
+        }
+
+        if use_view {
+            let (start, count) = self.shape.get_index(indices);
+            return self.bounded_view(self.get_shape().clone(), start, start + count);
+        } else {
+            return self.clone();
+        }
+    }
 
     /// Returns length of array
     pub fn len(&self) -> usize {
@@ -104,14 +124,24 @@ impl<T: Clone> Array<T> {
     }
 
     /// Creates view into array
-    ///
-    /// # Arguments
-    ///
-    /// * `indices` - Indices
     pub fn view(&self) -> Array<T> {
         return Array {
             data: self.data.clone(),
             shape: self.shape.clone(),
+        }
+    }
+
+    /// Creates bounded view into array
+    ///
+    /// # Arguments
+    ///
+    /// * `shape` - vector representing array shape
+    /// * `start` - start offset of array data
+    /// * `end` - end offset of array data
+    pub fn bounded_view(&self, shape: Vec<i32>, start: usize, end: usize) -> Array<T> {
+        return Array {
+            data: self.data.clone(),
+            shape: Shape::new(shape, start, end),
         }
     }
 

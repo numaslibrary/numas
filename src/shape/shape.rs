@@ -1,5 +1,6 @@
 use std::ops::Range;
 
+
 /// Array Shape Structure
 #[derive(Clone)]
 pub struct Shape {
@@ -68,17 +69,25 @@ impl Shape {
     /// # Arguments
     ///
     /// * `indices` - Indices
-    pub fn get_index(&self, indices: Vec<usize>) -> (usize, usize) {
-        let start = indices.iter()
+    pub fn get_index(&self, indices: Vec<Vec<usize>>) -> (usize, usize) {
+        let indices_size = indices.len();
+
+        if indices_size == 0 {
+            return (0, self.total_len());
+        }
+
+        let (start, end): (i32, i32) = indices.iter()
             .zip(self.strides.iter())
-            .fold(0, |index, (&i, &p)| index + i * p);
+            .fold(
+                (0, -1),
+                |(s, e), (i, &p)| (s + (i[0] * p) as i32, if i.len() == 2 && e == -1 { (i[1] * p) as i32 } else { -1 })
+            );
 
-        let range = indices.len()..self.strides.len();
+        if end == -1 {
+            return (start as usize, (self.shape[indices_size] as usize * self.strides[indices_size]));
+        }
 
-        let count = self.shape[range].iter()
-            .fold(1, |index, &value| index * value) as usize;
-
-        return (start + &self.start, count);
+        return (start as usize, end as usize);
     }
 
     /// Converts vector of indices to one index in linear array
@@ -113,7 +122,7 @@ impl Shape {
     /// # Arguments
     ///
     /// * `shape` - Array shape
-    pub fn total_len(shape: &Shape) -> i32 {
-        return Shape::len(&shape.shape, &shape.strides);
+    pub fn total_len(&self) -> usize {
+        return Shape::len(&self.shape, &self.strides) as usize;
     }
 }
