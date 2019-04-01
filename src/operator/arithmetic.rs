@@ -11,13 +11,8 @@ use std::ops::{
     DivAssign,
     MulAssign,
 };
-use std::ops::AddAssign;
-use std::ops::Div;
-use std::ops::DivAssign;
-use std::ops::Mul;
-use std::ops::MulAssign;
 
-impl <T> Add for Array<T> {
+impl <T: Clone> Add for Array<T> {
     type Output = Array<T>;
 
     fn add(self, other: Array<T>) -> Array<T> {
@@ -25,13 +20,13 @@ impl <T> Add for Array<T> {
     }
 }
 
-impl <T> AddAssign for Array<T> {
+impl <T: Clone> AddAssign for Array<T> {
     fn add_assign(&mut self, other: Array<T>) -> () {
 
     }
 }
 
-impl <T> Sub for Array<T> {
+impl <T: Clone> Sub for Array<T> {
     type Output = Array<T>;
 
     fn sub(self, other: Array<T>) -> Array<T> {
@@ -39,27 +34,27 @@ impl <T> Sub for Array<T> {
     }
 }
 
-impl <T> SubAssign for Array<T> {
+impl <T: Clone> SubAssign for Array<T> {
     fn sub_assign(&mut self, other: Array<T>) -> () {
 
     }
 }
 
-impl <T> Mul for Array<T> {
+impl <T: Clone> Mul for Array<T> {
     type Output = Array<T>;
 
-    fn add(self, other: Array<T>) -> Array<T> {
+    fn mul(self, other: Array<T>) -> Array<T> {
         return self;
     }
 }
 
-impl <T> MulAssign for Array<T> {
-    fn add_assign(&mut self, other: Array<T>) -> () {
+impl <T: Clone> MulAssign for Array<T> {
+    fn mul_assign(&mut self, other: Array<T>) -> () {
 
     }
 }
 
-impl <T> Div for Array<T> {
+impl <T: Clone> Div for Array<T> {
     type Output = Array<T>;
 
     fn div(self, other: Array<T>) -> Array<T> {
@@ -67,13 +62,13 @@ impl <T> Div for Array<T> {
     }
 }
 
-impl <T> DivAssign for Array<T> {
+impl <T: Clone> DivAssign for Array<T> {
     fn div_assign(&mut self, other: Array<T>) -> () {
 
     }
 }
 
-impl <T> Neg for Array<T> {
+impl <T: Clone> Neg for Array<T> {
     type Output = Array<T>;
 
     fn neg(self) -> Array<T> {
