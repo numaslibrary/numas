@@ -19,8 +19,8 @@ pub fn fill<T: Clone>(value: T, shape: Vec<i32>) -> Array<T> {
 ///
 /// * `shape` - shape of new array
 #[inline]
-pub fn zeros(shape: Vec<i32>) -> Array<i32> {
-    return fill(0, shape);
+pub fn zeros<T: Clone + From<u8>>(shape: Vec<i32>) -> Array<T> {
+    return fill::<T>(T::from(0), shape);
 }
 
 /// Creates new array of given shape filled with zeros
@@ -29,8 +29,8 @@ pub fn zeros(shape: Vec<i32>) -> Array<i32> {
 ///
 /// * `shape` - shape of new array
 #[inline]
-pub fn zeroes(shape: Vec<i32>) -> Array<i32> {
-    return zeros(shape);
+pub fn zeroes<T: Clone + From<u8>>(shape: Vec<i32>) -> Array<T> {
+    return zeros::<T>(shape);
 }
 
 /// Creates new array of given shape filled with ones
@@ -39,6 +39,6 @@ pub fn zeroes(shape: Vec<i32>) -> Array<i32> {
 ///
 /// * `shape` - shape of new array
 #[inline]
-pub fn ones(shape: Vec<i32>) -> Array<i32> {
-    return fill(1, shape);
+pub fn ones<T: Clone + From<u8>>(shape: Vec<i32>) -> Array<T> {
+    return fill::<T>(T::from(1), shape);
 }
