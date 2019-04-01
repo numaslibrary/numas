@@ -107,7 +107,7 @@ impl<T: Clone> Array<T> {
 
         if use_view {
             let (start, count) = self.shape.get_index(indices);
-            return self.bounded_view(self.get_shape().clone(), start, start + count);
+            return self.bounded_view(self.get_shape(), start, start + count);
         } else {
             return self.clone();
         }
@@ -138,10 +138,10 @@ impl<T: Clone> Array<T> {
     /// * `shape` - vector representing array shape
     /// * `start` - start offset of array data
     /// * `end` - end offset of array data
-    pub fn bounded_view(&self, shape: Vec<i32>, start: usize, end: usize) -> Array<T> {
+    pub fn bounded_view(&self, shape: &Vec<i32>, start: usize, end: usize) -> Array<T> {
         return Array {
             data: self.data.clone(),
-            shape: Shape::new(shape, start, end),
+            shape: Shape::new(shape.clone(), start, end),
         }
     }
 
