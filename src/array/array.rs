@@ -37,7 +37,6 @@ impl<T: Clone> Array<T> {
     /// * `shape` - vector representing array shape
     pub fn new(data: Vec<T>, shape: Vec<i32>) -> Array<T> {
         let length = data.len();
-        let bounds: Vec<(usize, usize, usize)> = vec![(0, 1, length)];
 
         return Array::new_bounded(data, shape, 0, length);
     }
@@ -70,47 +69,55 @@ impl<T: Clone> Array<T> {
         self.shape.set_shape(shape);
     }
 
-    /// Returns linear vector from given indices
+    /// Validates indices have right dimension
+    ///
+    /// # Arguments
+    ///
+    /// * `indices` - Indices
+    fn check_indices_size(&self, indices: &Vec<Vec<usize>>) -> () {
+        let shape_len = self.shape.get_shape().len();
+
+        if indices.len() > shape_len {
+            panic!(
+                "Invalid indices given: shape dimensions {}, indices dimensions {}",
+                shape_len,
+                indices.len()
+            );
+        }
+    }
+
+    /// Set values on given indices to given value
     ///
     /// # Arguments
     ///
     /// * `indices` - vector of indices
-    pub fn get_raw(&self, indices: Vec<Vec<usize>>) -> Vec<T> {
-        let (start, count) = self.shape.get_index(indices);
-        let data = self.data.borrow().clone();
+    /// * `value` - value to fill it with
+    pub fn set(&self, indices: Vec<Vec<usize>>, value: T) -> () {
+        self.check_indices_size(&indices);
 
-        println!("{:?}", start);
-
-        println!("{:?}", count);
-        return data[start..(count + start)].to_vec();
-    }
-
-    pub fn set(&mut self, indices: Vec<Vec<usize>>, mut values: Vec<T>) -> () {
-        let (start, count) = self.shape.get_index(indices);
-        let range = 0..cmp::min(count, values.len());
+        let shape = self.shape.indices_to_shape(indices);
         let mut data = self.data.borrow_mut();
 
-        for (index, value) in values.drain(range).enumerate() {
-            data[start + index] = value;
+        for i in shape.get_bounds() {
+            data[i] = value.clone();
         }
     }
 
+    /// Return new Array from given indices
+    ///
+    /// # Arguments
+    ///
+    /// * `indices` - vector of indices
     pub fn get(&self, indices: Vec<Vec<usize>>) -> Array<T> {
-        let mut use_view = true;
+        // Handle invalid indices length
+        self.check_indices_size(&indices);
 
-        for (i, value) in indices.iter().skip(1).enumerate() {
-            if indices[i - 1].len() > indices[i].len() {
-                use_view = false;
-                break;
-            }
-        }
+        let new_shape = self.shape.indices_to_shape(indices);
 
-        if use_view {
-            let (start, count) = self.shape.get_index(indices);
-            return self.bounded_view(self.get_shape(), start, start + count);
-        } else {
-            return self.clone();
-        }
+        return Array {
+            shape: new_shape,
+            data: self.data.clone(),
+        };
     }
 
     /// Returns length of array
@@ -144,12 +151,6 @@ impl<T: Clone> Array<T> {
             shape: Shape::new(shape.clone(), start, end),
         }
     }
-
-    pub fn set_t(&mut self, index: usize, value: T) -> () {
-        let mut data = self.data.borrow_mut();
-        data[index] = value;
-    }
-
 }
 
 impl<T: Clone> Clone for Array<T> {
@@ -166,30 +167,7 @@ impl<T: Clone> Clone for Array<T> {
 
 impl <T: fmt::Debug + Clone> fmt::Debug for Array<T> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let shape = self.shape.get_shape();
-        let count = shape.iter().last();
-
-//        match count {
-//            None => {
-//                writeln!(f, "Invalid array instance");
-//            },
-//
-//            Some(c) => {
-//                for index in 0..shape.len() {
-//                    writeln!(f, "{}[", "\t".repeat(index));
-//                }
-//
-//                for (index, value) in shape.iter().enumerate() {
-//                    writeln!(f, "{}[", "\t".repeat(index));
-//                }
-//
-//                for index in (0..shape.len()).rev() {
-//                    writeln!(f, "{}]", "\t".repeat(index));
-//                }
-//            },
-//        }
-
         let data = self.data.borrow();
-        return write!(f, "{:?}", &data[self.shape.get_bounds()]);
+        return write!(f, "data: \t{:?}\nshape: \t{:?}", &data[self.shape.get_bounds()], self.get_shape());
     }
 }
