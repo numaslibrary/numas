@@ -106,7 +106,8 @@ impl Shape {
             .fold(0, |acc, (i, s)| acc + s * i[0]);
 
         let shape = if indices_len != 0 && indices[indices_len - 1].len() == 2 {
-            let mut tmp: Vec<i32> = vec![(indices[indices_len - 1][1] - indices[indices_len - 1][0] + 1) as i32];
+            let mut tmp: Vec<i32> = Vec::with_capacity(&shape_len - &indices_len + 1);
+            tmp.push((indices[indices_len - 1][1] - indices[indices_len - 1][0] + 1) as i32);
             tmp.extend(self.shape.iter().skip(indices_len));
             tmp
         } else if indices_len == shape_len {
