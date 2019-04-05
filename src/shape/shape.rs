@@ -60,6 +60,7 @@ impl Shape {
     }
 
     /// Returns shape
+    #[inline]
     pub fn get_shape(&self) -> &Vec<i32> {
         return &self.shape;
     }
@@ -89,7 +90,6 @@ impl Shape {
 
         return (start as usize, end as usize);
     }
-
 
     /// Converts vector of indices to Shape
     ///
@@ -121,19 +121,8 @@ impl Shape {
         return Shape::new(shape, offset.clone() as usize, end);
     }
 
-
-    /// Converts vector of indices to one index in linear array
-    ///
-    /// # Arguments
-    ///
-    /// * `indices` - Indices
-    pub fn to_index(&self, indices: &Vec<usize>) -> usize {
-        return indices.iter()
-            .zip(self.strides.iter())
-            .fold(0, |acc, (&i, &s)| acc + i * s);
-    }
-
     /// Returns bounds of shape
+    #[inline]
     pub fn get_bounds(&self) -> Range<usize> {
         return self.start..self.end;
     }
@@ -154,6 +143,7 @@ impl Shape {
     /// # Arguments
     ///
     /// * `shape` - Array shape
+    #[inline]
     pub fn total_len(&self) -> usize {
         return Shape::len(&self.shape, &self.strides) as usize;
     }
