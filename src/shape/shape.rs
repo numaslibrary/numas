@@ -90,6 +90,38 @@ impl Shape {
         return (start as usize, end as usize);
     }
 
+
+    /// Converts vector of indices to Shape
+    ///
+    /// # Arguments
+    ///
+    /// * `indices` - Indices
+    pub fn indices_to_shape(&self, indices: Vec<Vec<usize>>) -> Shape {
+        let indices_len = indices.len();
+        let shape_len = self.shape.len();
+
+        let offset = indices
+            .iter()
+            .zip(self.strides.iter())
+            .fold(0, |acc, (i, s)| acc + s * i[0]);
+
+        let shape = if indices_len != 0 && indices[indices_len - 1].len() == 2 {
+            let mut tmp: Vec<i32> = vec![(indices[indices_len - 1][1] - indices[indices_len - 1][0] + 1) as i32];
+            tmp.extend(self.shape.iter().skip(indices_len));
+            tmp
+        } else if indices_len == shape_len {
+            vec![1]
+        } else {
+            self.shape[indices_len..shape_len].to_vec()
+        };
+
+        let count = shape[0].clone() as usize * self.strides[self.strides.len() - shape.len()];
+        let end = offset.clone() + count;
+
+        return Shape::new(shape, offset.clone() as usize, end);
+    }
+
+
     /// Converts vector of indices to one index in linear array
     ///
     /// # Arguments
