@@ -65,32 +65,6 @@ impl Shape {
         return &self.shape;
     }
 
-    /// Returns real index in linear array and number of elements
-    ///
-    /// # Arguments
-    ///
-    /// * `indices` - Indices
-    pub fn get_index(&self, indices: Vec<Vec<usize>>) -> (usize, usize) {
-        let indices_size = indices.len();
-
-        if indices_size == 0 {
-            return (0, self.total_len());
-        }
-
-        let (start, end): (i32, i32) = indices.iter()
-            .zip(self.strides.iter())
-            .fold(
-                (0, -1),
-                |(s, e), (i, &p)| (s + (i[0] * p) as i32, if i.len() == 2 && e == -1 { (i[1] * p) as i32 } else { -1 })
-            );
-
-        if end == -1 {
-            return (start as usize, (self.shape[indices_size] as usize * self.strides[indices_size]));
-        }
-
-        return (start as usize, end as usize);
-    }
-
     /// Converts vector of indices to Shape
     ///
     /// # Arguments
