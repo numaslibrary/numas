@@ -56,8 +56,9 @@ impl<T: Clone> Array<T> {
     /// # Arguments
     ///
     /// * `shape` - vector representing new array shape
-    pub fn reshape(&mut self, shape: Vec<i32>) -> () {
+    pub fn reshape(&mut self, shape: Vec<i32>) -> &Array<T> {
         self.shape.set_shape(shape);
+        return self;
     }
 
     /// Sets array shape
