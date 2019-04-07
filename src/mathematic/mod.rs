@@ -1,8 +1,5 @@
 use array::Array;
 
-const RAD_DEG: f64 = 5.0;
-const DEG_RAD: f64 = 5.0;
-
 
 /// Applies given function on given array elements and returns new array
 ///
