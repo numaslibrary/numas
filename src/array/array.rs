@@ -104,6 +104,21 @@ impl<T: Clone> Array<T> {
         }
     }
 
+    /// Fills array with given value
+    ///
+    /// # Arguments
+    ///
+    /// * `value` - fill value
+    pub fn fill(&self, value: T) -> &Array<T> {
+        let mut data = self.data.borrow_mut();
+
+        for i in self.shape.get_bounds() {
+            data[i] = value.clone();
+        }
+
+        return self;
+    }
+
     /// Return new Array from given indices
     ///
     /// # Arguments
