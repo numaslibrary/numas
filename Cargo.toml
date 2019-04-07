@@ -2,8 +2,16 @@
 name = "numas"
 version = "0.1.2"
 authors = ["Lukáš Zahradník <LukasZahradnik96@seznam.cz>"]
-description = "numas library"
+description = "numas library is implementation of multidimensional array for efficient computing"
+homepage = "https://numaslibrary.github.io/"
+repository = "https://github.com/numaslibrary/numas"
+readme = "./README.md"
+keywords = ["numeric", "array", "ndarray", "multidimensional", "numpy"]
+categories = ["data-structures", "science"]
 license = "MIT"
+
+[badges]
+maintenance = { status = "actively-developed"}
 
 [dependencies]
 rand = "0.6.5"
