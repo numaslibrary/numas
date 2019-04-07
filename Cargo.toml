@@ -7,3 +7,6 @@ license = "MIT"
 
 [dependencies]
 rand = "0.6.5"
+
+[lib]
+crate-type = ["lib"]
