@@ -8,7 +8,7 @@ use shape::Shape;
 ///
 /// * `value` - value to fill array with
 /// * `shape` - shape of new array
-pub fn fill<T: Clone>(value: T, shape: Vec<i32>) -> Array<T> {
+pub fn full<T: Clone>(value: T, shape: Vec<i32>) -> Array<T> {
     let len: i32 = shape.iter().product();
     return Array::new(vec![value; len as usize], shape);
 }
@@ -20,7 +20,7 @@ pub fn fill<T: Clone>(value: T, shape: Vec<i32>) -> Array<T> {
 /// * `shape` - shape of new array
 #[inline]
 pub fn zeros<T: Clone + From<u8>>(shape: Vec<i32>) -> Array<T> {
-    return fill::<T>(T::from(0), shape);
+    return full::<T>(T::from(0), shape);
 }
 
 /// Creates new array of given shape filled with zeros
@@ -40,5 +40,5 @@ pub fn zeroes<T: Clone + From<u8>>(shape: Vec<i32>) -> Array<T> {
 /// * `shape` - shape of new array
 #[inline]
 pub fn ones<T: Clone + From<u8>>(shape: Vec<i32>) -> Array<T> {
-    return fill::<T>(T::from(1), shape);
+    return full::<T>(T::from(1), shape);
 }
