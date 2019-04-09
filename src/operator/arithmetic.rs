@@ -16,7 +16,7 @@ use std::ops::{
 
 #[inline]
 fn check_shapes_compatibility(first: &Shape, second: &Shape) -> () {
-    if first != second {
+    if first != second && second.total_len() != 1 {
         panic!("Shapes are not compatible");
     }
 }
@@ -32,8 +32,16 @@ impl<T> Add for Array<T> where T: Clone + Add<Output=T> {
 
         let mut data: Vec<T> = Vec::with_capacity(self.len());
 
-        for (f, s) in self.shape.get_bounds().zip(other.shape.get_bounds()) {
-            data.push(first_data[f].clone() + second_data[s].clone());
+        if other.shape.total_len() == 1 {
+            let value = second_data[other.shape.get_bounds().start].clone();
+
+            for f in self.shape.get_bounds() {
+                data.push(first_data[f].clone() + value.clone());
+            }
+        } else {
+            for (f, s) in self.shape.get_bounds().zip(other.shape.get_bounds()) {
+                data.push(first_data[f].clone() + second_data[s].clone());
+            }
         }
 
         return Array::new(data, self.get_shape().clone());
@@ -53,8 +61,16 @@ impl<T> AddAssign for Array<T> where T: Clone + Add<Output=T> {
             let mut first_data = self.data.borrow_mut();
             let second_data = other.data.borrow();
 
-            for (f, s) in self.shape.get_bounds().zip(other.shape.get_bounds()) {
-                first_data[f] = first_data[f].clone() + second_data[s].clone();
+            if other.shape.total_len() == 1 {
+                let value = second_data[other.shape.get_bounds().start].clone();
+
+                for f in self.shape.get_bounds() {
+                    first_data[f] = first_data[f].clone() + value.clone();
+                }
+            } else {
+                for (f, s) in self.shape.get_bounds().zip(other.shape.get_bounds()) {
+                    first_data[f] = first_data[f].clone() + second_data[s].clone();
+                }
             }
         }
     }
@@ -71,8 +87,16 @@ impl<T> Sub for Array<T> where T: Clone + Sub<Output=T> {
 
         let mut data: Vec<T> = Vec::with_capacity(self.len());
 
-        for (f, s) in self.shape.get_bounds().zip(other.shape.get_bounds()) {
-            data.push(first_data[f].clone() - second_data[s].clone());
+        if other.shape.total_len() == 1 {
+            let value = second_data[other.shape.get_bounds().start].clone();
+
+            for f in self.shape.get_bounds() {
+                data.push(first_data[f].clone() - value.clone());
+            }
+        } else {
+            for (f, s) in self.shape.get_bounds().zip(other.shape.get_bounds()) {
+                data.push(first_data[f].clone() - second_data[s].clone());
+            }
         }
 
         return Array::new(data, self.get_shape().clone());
@@ -92,8 +116,16 @@ impl<T> SubAssign for Array<T> where T: Clone + Sub<Output=T> {
             let mut first_data = self.data.borrow_mut();
             let second_data = other.data.borrow();
 
-            for (f, s) in self.shape.get_bounds().zip(other.shape.get_bounds()) {
-                first_data[f] = first_data[f].clone() - second_data[s].clone();
+            if other.shape.total_len() == 1 {
+                let value = second_data[other.shape.get_bounds().start].clone();
+
+                for f in self.shape.get_bounds() {
+                    first_data[f] = first_data[f].clone() - value.clone();
+                }
+            } else {
+                for (f, s) in self.shape.get_bounds().zip(other.shape.get_bounds()) {
+                    first_data[f] = first_data[f].clone() - second_data[s].clone();
+                }
             }
         }
     }
@@ -110,8 +142,16 @@ impl<T> Mul for Array<T> where T: Clone + Mul<Output=T> {
 
         let mut data: Vec<T> = Vec::with_capacity(self.len());
 
-        for (f, s) in self.shape.get_bounds().zip(other.shape.get_bounds()) {
-            data.push(first_data[f].clone() * second_data[s].clone());
+        if other.shape.total_len() == 1 {
+            let value = second_data[other.shape.get_bounds().start].clone();
+
+            for f in self.shape.get_bounds() {
+                data.push(first_data[f].clone() * value.clone());
+            }
+        } else {
+            for (f, s) in self.shape.get_bounds().zip(other.shape.get_bounds()) {
+                data.push(first_data[f].clone() * second_data[s].clone());
+            }
         }
 
         return Array::new(data, self.get_shape().clone());
@@ -131,8 +171,16 @@ impl<T> MulAssign for Array<T> where T: Clone + Mul<Output=T> {
             let mut first_data = self.data.borrow_mut();
             let second_data = other.data.borrow();
 
-            for (f, s) in self.shape.get_bounds().zip(other.shape.get_bounds()) {
-                first_data[f] = first_data[f].clone() * second_data[s].clone();
+            if other.shape.total_len() == 1 {
+                let value = second_data[other.shape.get_bounds().start].clone();
+
+                for f in self.shape.get_bounds() {
+                    first_data[f] = first_data[f].clone() * value.clone();
+                }
+            } else {
+                for (f, s) in self.shape.get_bounds().zip(other.shape.get_bounds()) {
+                    first_data[f] = first_data[f].clone() * second_data[s].clone();
+                }
             }
         }
     }
@@ -149,8 +197,16 @@ impl<T> Div for Array<T> where T: Clone + Div<Output=T> {
 
         let mut data: Vec<T> = Vec::with_capacity(self.len());
 
-        for (f, s) in self.shape.get_bounds().zip(other.shape.get_bounds()) {
-            data.push(first_data[f].clone() / second_data[s].clone());
+        if other.shape.total_len() == 1 {
+            let value = second_data[other.shape.get_bounds().start].clone();
+
+            for f in self.shape.get_bounds() {
+                data.push(first_data[f].clone() / value.clone());
+            }
+        } else {
+            for (f, s) in self.shape.get_bounds().zip(other.shape.get_bounds()) {
+                data.push(first_data[f].clone() / second_data[s].clone());
+            }
         }
 
         return Array::new(data, self.get_shape().clone());
@@ -170,8 +226,16 @@ impl<T> DivAssign for Array<T> where T: Clone + Div<Output=T> {
             let mut first_data = self.data.borrow_mut();
             let second_data = other.data.borrow();
 
-            for (f, s) in self.shape.get_bounds().zip(other.shape.get_bounds()) {
-                first_data[f] = first_data[f].clone() / second_data[s].clone();
+            if other.shape.total_len() == 1 {
+                let value = second_data[other.shape.get_bounds().start].clone();
+
+                for f in self.shape.get_bounds() {
+                    first_data[f] = first_data[f].clone() / value.clone();
+                }
+            } else {
+                for (f, s) in self.shape.get_bounds().zip(other.shape.get_bounds()) {
+                    first_data[f] = first_data[f].clone() / second_data[s].clone();
+                }
             }
         }
     }
