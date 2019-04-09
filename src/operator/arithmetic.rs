@@ -177,10 +177,17 @@ impl<T> DivAssign for Array<T> where T: Clone + Div<Output=T> {
     }
 }
 
-impl<T: Clone> Neg for Array<T> {
+impl<T> Neg for Array<T> where T: Clone + Neg<Output = T> {
     type Output = Array<T>;
 
     fn neg(self) -> Array<T> {
+        {
+            let mut data = self.data.borrow_mut();
+
+            for i in self.shape.get_bounds() {
+                data[i] = -data[i].clone();
+            }
+        }
         return self;
     }
 }
