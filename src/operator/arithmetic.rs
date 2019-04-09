@@ -14,6 +14,12 @@ use std::ops::{
 };
 
 
+/// Checks if shapes are compatible - have same dimensions and length or second one is unit array
+///
+/// # Arguments
+///
+/// * `first` - the first shape
+/// * `second` - the second shape
 #[inline]
 fn check_shapes_compatibility(first: &Shape, second: &Shape) -> () {
     if first != second && second.total_len() != 1 {
@@ -241,7 +247,7 @@ impl<T> DivAssign for Array<T> where T: Clone + Div<Output=T> {
     }
 }
 
-impl<T> Neg for Array<T> where T: Clone + Neg<Output = T> {
+impl<T> Neg for Array<T> where T: Clone + Neg<Output=T> {
     type Output = Array<T>;
 
     fn neg(self) -> Array<T> {
