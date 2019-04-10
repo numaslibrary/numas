@@ -3,7 +3,7 @@ use array::Array;
 
 
 impl<T> Array<T> where T: Clone + From<u8> {
-    /// Sums all elements in array or view view
+    /// Returns sums of all elements in array or view
     pub fn sum(&self) -> T where T: AddAssign {
         let data = self.data.borrow();
         let mut accumulator = T::from(0 as u8);
@@ -15,7 +15,7 @@ impl<T> Array<T> where T: Clone + From<u8> {
         return accumulator;
     }
 
-    /// Sums all elements in array or view view
+    /// Returns product of all elements in array or view
     pub fn prod(&self) -> T where T: MulAssign {
         if self.len() == 0 {
             return T::from(0 as u8);
