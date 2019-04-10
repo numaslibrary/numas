@@ -167,6 +167,12 @@ impl<T: Clone> Array<T> {
             shape: Shape::new(shape.clone(), start, end),
         }
     }
+
+    /// Collects elements of array into vector
+    pub fn collect(&self) -> Vec<T> {
+        let data = self.data.borrow();
+        return data[self.shape.get_bounds()].to_vec();
+    }
 }
 
 impl<T: Clone> Clone for Array<T> {
