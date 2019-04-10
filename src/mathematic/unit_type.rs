@@ -1,4 +1,0 @@
-enum UnitType {
-    Radians,
-    Degrees
-}
