@@ -4,4 +4,7 @@ pub mod array;
 pub mod shape;
 pub mod factory;
 pub mod linear_algebra;
+mod operator;
+mod mathematic;
+
 
