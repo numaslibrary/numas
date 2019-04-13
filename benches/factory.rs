@@ -22,12 +22,22 @@ mod tests {
     }
 
     #[bench]
+    fn fill_zeros(b: &mut Bencher) {
+        b.iter(|| fill::zeros::<f64>(vec![100,10,10,10,10]));
+    }
+
+    #[bench]
+    fn fill_zeroes(b: &mut Bencher) {
+        b.iter(|| fill::zeroes::<f64>(vec![100,10,10,10,10]));
+    }
+
+    #[bench]
     fn fill_ones(b: &mut Bencher) {
         b.iter(|| fill::ones::<f64>(vec![100,10,10,10,10]));
     }
 
     #[bench]
     fn fill_number(b: &mut Bencher) {
-        b.iter(|| fill::fill::<i32>(5, vec![100,10,10,10,10]));
+        b.iter(|| fill::full::<f64>(5.0, vec![100,10,10,10,10]));
     }
 }
