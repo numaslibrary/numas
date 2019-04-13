@@ -14,6 +14,6 @@ fn apply<T, S, R>(array: &Array<T>, function: S ) -> Array<R>
         return Array::new(data, array.get_shape().clone());
 }
 
-pub mod hyperbolic;
-pub mod trigonometric;
-pub mod reducer;
+mod hyperbolic;
+mod trigonometric;
+mod reducer;
