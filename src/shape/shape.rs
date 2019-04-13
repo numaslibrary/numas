@@ -74,7 +74,7 @@ impl Shape {
         let indices_len = indices.len();
         let shape_len = self.shape.len();
 
-        let offset = indices
+        let offset = self.start + indices
             .iter()
             .zip(self.strides.iter())
             .fold(0, |acc, (i, s)| acc + s * i[0]);
