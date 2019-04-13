@@ -1,4 +1,3 @@
-use std::cmp;
 use std::fmt;
 use std::cell::RefCell;
 use std::rc::Rc;

@@ -1,7 +1,6 @@
 pub mod product;
 
 use array::Array;
-use shape::Shape;
 
 /// Checks if array is matrix like
 ///

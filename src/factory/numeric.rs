@@ -1,5 +1,4 @@
 use array::Array;
-use std::ops::{Sub, Div, Add, Range, RangeFrom};
 
 /// Returns evenly spaced elements from given interval
 ///

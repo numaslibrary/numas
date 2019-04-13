@@ -5,4 +5,5 @@ pub mod shape;
 pub mod mathematic;
 pub mod factory;
 pub mod operator;
+pub mod linear_algebra;
 

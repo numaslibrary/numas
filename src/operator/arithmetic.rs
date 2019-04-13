@@ -1,5 +1,4 @@
 use array::Array;
-use shape::Shape;
 
 use std::ops::{
     Add,
@@ -14,24 +13,11 @@ use std::ops::{
 };
 
 
-/// Checks if shapes are compatible - have same dimensions and length or second one is unit array
-///
-/// # Arguments
-///
-/// * `first` - the first shape
-/// * `second` - the second shape
-#[inline]
-fn check_shapes_compatibility(first: &Shape, second: &Shape) -> () {
-    if first != second && second.total_len() != 1 {
-        panic!("Shapes are not compatible");
-    }
-}
-
 impl<T> Add for Array<T> where T: Clone + Add<Output=T> {
     type Output = Array<T>;
 
     fn add(self, other: Array<T>) -> Array<T> {
-        check_shapes_compatibility(&self.shape, &other.shape);
+        super::check_shapes_compatibility(&self.shape, &other.shape);
 
         let first_data = self.data.borrow();
         let second_data = other.data.borrow();
@@ -56,7 +42,7 @@ impl<T> Add for Array<T> where T: Clone + Add<Output=T> {
 
 impl<T> AddAssign for Array<T> where T: Clone + Add<Output=T> {
     fn add_assign(&mut self, other: Array<T>) -> () {
-        check_shapes_compatibility(&self.shape, &other.shape);
+        super::check_shapes_compatibility(&self.shape, &other.shape);
 
         if self.data.as_ptr() == other.data.as_ptr() {
             let mut first_data = self.data.borrow_mut();
@@ -86,7 +72,7 @@ impl<T> Sub for Array<T> where T: Clone + Sub<Output=T> {
     type Output = Array<T>;
 
     fn sub(self, other: Array<T>) -> Array<T> {
-        check_shapes_compatibility(&self.shape, &other.shape);
+        super::check_shapes_compatibility(&self.shape, &other.shape);
 
         let first_data = self.data.borrow();
         let second_data = other.data.borrow();
@@ -111,7 +97,7 @@ impl<T> Sub for Array<T> where T: Clone + Sub<Output=T> {
 
 impl<T> SubAssign for Array<T> where T: Clone + Sub<Output=T> {
     fn sub_assign(&mut self, other: Array<T>) -> () {
-        check_shapes_compatibility(&self.shape, &other.shape);
+        super::check_shapes_compatibility(&self.shape, &other.shape);
 
         if self.data.as_ptr() == other.data.as_ptr() {
             let mut first_data = self.data.borrow_mut();
@@ -141,7 +127,7 @@ impl<T> Mul for Array<T> where T: Clone + Mul<Output=T> {
     type Output = Array<T>;
 
     fn mul(self, other: Array<T>) -> Array<T> {
-        check_shapes_compatibility(&self.shape, &other.shape);
+        super::check_shapes_compatibility(&self.shape, &other.shape);
 
         let first_data = self.data.borrow();
         let second_data = other.data.borrow();
@@ -166,7 +152,7 @@ impl<T> Mul for Array<T> where T: Clone + Mul<Output=T> {
 
 impl<T> MulAssign for Array<T> where T: Clone + Mul<Output=T> {
     fn mul_assign(&mut self, other: Array<T>) -> () {
-        check_shapes_compatibility(&self.shape, &other.shape);
+        super::check_shapes_compatibility(&self.shape, &other.shape);
 
         if self.data.as_ptr() == other.data.as_ptr() {
             let mut first_data = self.data.borrow_mut();
@@ -196,7 +182,7 @@ impl<T> Div for Array<T> where T: Clone + Div<Output=T> {
     type Output = Array<T>;
 
     fn div(self, other: Array<T>) -> Array<T> {
-        check_shapes_compatibility(&self.shape, &other.shape);
+        super::check_shapes_compatibility(&self.shape, &other.shape);
 
         let first_data = self.data.borrow();
         let second_data = other.data.borrow();
@@ -221,7 +207,7 @@ impl<T> Div for Array<T> where T: Clone + Div<Output=T> {
 
 impl<T> DivAssign for Array<T> where T: Clone + Div<Output=T> {
     fn div_assign(&mut self, other: Array<T>) -> () {
-        check_shapes_compatibility(&self.shape, &other.shape);
+        super::check_shapes_compatibility(&self.shape, &other.shape);
 
         if self.data.as_ptr() == other.data.as_ptr() {
             let mut first_data = self.data.borrow_mut();

@@ -8,7 +8,6 @@ use self::rand::{
     Rng,
 };
 
-use std::iter;
 use array::Array;
 
 

@@ -1,5 +1,4 @@
 use array::Array;
-use shape::Shape;
 
 
 /// Creates new array of given shape filled with given value
