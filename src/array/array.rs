@@ -40,12 +40,14 @@ impl<T: Clone> Array<T> {
         return Array::new_bounded(data, shape, 0, length);
     }
 
-    /// Returns vector representing array shape
-    pub fn shape(&self) -> &Vec<i32> {
-        self.shape.get_shape()
+    /// Returns Shape instance
+    #[inline]
+    pub fn shape(&self) -> &Shape {
+        &self.shape
     }
 
     /// Returns vector representing array shape
+    #[inline]
     pub fn get_shape(&self) -> &Vec<i32> {
         self.shape.get_shape()
     }
@@ -55,6 +57,7 @@ impl<T: Clone> Array<T> {
     /// # Arguments
     ///
     /// * `shape` - vector representing new array shape
+    #[inline]
     pub fn reshape(&mut self, shape: Vec<i32>) -> &Array<T> {
         self.shape.set_shape(shape);
         return self;
@@ -65,6 +68,7 @@ impl<T: Clone> Array<T> {
     /// # Arguments
     ///
     /// * `shape` - vector representing new array shape
+    #[inline]
     pub fn set_shape(&mut self, shape: Vec<i32>) -> () {
         self.shape.set_shape(shape);
     }
@@ -141,11 +145,13 @@ impl<T: Clone> Array<T> {
     }
 
     /// Returns base length of array
+    #[inline]
     pub fn base_len(&self) -> usize {
         return self.data.borrow().len();
     }
 
     /// Creates view into array
+    #[inline]
     pub fn view(&self) -> Array<T> {
         return Array {
             data: self.data.clone(),
@@ -160,6 +166,7 @@ impl<T: Clone> Array<T> {
     /// * `shape` - vector representing array shape
     /// * `start` - start offset of array data
     /// * `end` - end offset of array data
+    #[inline]
     pub fn bounded_view(&self, shape: &Vec<i32>, start: usize, end: usize) -> Array<T> {
         return Array {
             data: self.data.clone(),

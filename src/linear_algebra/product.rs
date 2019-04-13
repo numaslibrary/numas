@@ -18,7 +18,7 @@ pub fn vdot<T>(first: &Array<T>, second: &Array<T>) -> T
     let first_data = first.data.borrow();
     let second_data = second.data.borrow();
 
-    return first.shape.get_bounds()
-        .zip(second.shape.get_bounds())
+    return first.shape().get_bounds()
+        .zip(second.shape().get_bounds())
         .fold(T::from(0), |acc, (f, s)| acc + first_data[f].clone() * second_data[s].clone());
 }
