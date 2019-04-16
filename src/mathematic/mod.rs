@@ -19,3 +19,4 @@ fn apply<T, S, R>(array: &Array<T>, function: S ) -> Array<R>
 mod hyperbolic;
 mod trigonometric;
 mod reducer;
+mod miscellaneous;
