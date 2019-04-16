@@ -20,3 +20,4 @@ mod hyperbolic;
 mod trigonometric;
 mod reducer;
 mod miscellaneous;
+mod round;
