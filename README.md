@@ -1,16 +1,18 @@
 # numas
 numas is Rust library implementing n-dimensional array for generic types.
 
+#### New in numas 0.1.9
+- Rounding functions
+- Logarithm functions
+- Bug fixes
+
 ## Content
 
 Library contains:
 - Multidimensional array support
 - Multidimensional view support
 - Random factories, fillers and other factories
-- Hyperbolic functions for arrays
-- Trigonometric functions for arrays
-- Arithmetic functions for arrays
-- Logarithm functions for arrays
+- Hyperbolic, trigonometric, arithmetic, logarithmic and rounding functions for arrays
 
 
 ## Usage
@@ -28,9 +30,21 @@ Sometimes is needed to change shape of an array. Actually there are two ways of 
 First one is via method `reshape` which returns array that it's called on enabling fluent/builder pattern interface.
 Second one is method `set_shape` which just sets shape and doesnt return anything.
 
+### Functions
+The majority of functions are accessible via an array instance.
+
+```rust
+
+let array = Array::new(vec![1,2,3,4,5], vec![5]);
+array.sin(); // Returns new array with elements equal to sin(1), sin(2)...
+array.cos();
+array.sqrt();
+//etc.
+```
+
 ### Operators
 Currently there are supported basic mathematical operators on array - add, sub, mul, div and negation, all element wise.
-Also theirs assign equivavelnts are implemented (+=, -= ...)
+Also theirs assign equivalents are implemented (+=, -= ...)
 
 ### View
 numas implements views the same way as array, so views act as arrays and it's possible to perform all operations as on array, but
