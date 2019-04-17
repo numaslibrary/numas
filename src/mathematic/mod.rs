@@ -11,7 +11,7 @@ fn apply<T, S, R>(array: &Array<T>, function: S ) -> Array<R>
     where T: Clone, R: Clone, S: FnMut(&T) -> R,
 {
         let old_data = array.data.borrow();
-        let mut data: Vec<R> = old_data[array.shape().get_bounds()].iter().map(function).collect();
+        let data: Vec<R> = old_data[array.shape().get_bounds()].iter().map(function).collect();
 
         return Array::new(data, array.get_shape().clone());
 }
@@ -21,3 +21,4 @@ mod trigonometric;
 mod reducer;
 mod miscellaneous;
 mod round;
+mod logarithm;
