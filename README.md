@@ -10,6 +10,7 @@ Library contains:
 - Hyperbolic functions for arrays
 - Trigonometric functions for arrays
 - Arithmetic functions for arrays
+- Logarithm functions for arrays
 
 
 ## Usage
