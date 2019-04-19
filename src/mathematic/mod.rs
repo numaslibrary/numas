@@ -22,3 +22,4 @@ mod reducer;
 mod miscellaneous;
 mod round;
 mod logarithm;
+mod exponential;
