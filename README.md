@@ -1,6 +1,10 @@
 # numas
 numas is Rust library implementing n-dimensional array for generic types.
 
+#### New in numas 0.2.0
+- Exponential functions
+- Added more examples
+
 #### New in numas 0.1.9
 - Rounding functions
 - Logarithm functions
@@ -12,7 +16,7 @@ Library contains:
 - Multidimensional array support
 - Multidimensional view support
 - Random factories, fillers and other factories
-- Hyperbolic, trigonometric, arithmetic, logarithmic and rounding functions for arrays
+- Hyperbolic, trigonometric, arithmetic, logarithmic, exponential and rounding functions for arrays
 
 
 ## Usage

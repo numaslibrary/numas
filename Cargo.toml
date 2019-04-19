@@ -1,6 +1,6 @@
 [package]
 name = "numas"
-version = "0.1.9"
+version = "0.2.0"
 authors = ["Lukáš Zahradník <LukasZahradnik96@seznam.cz>"]
 description = "numas library is implementation of multidimensional array for efficient computing"
 homepage = "https://numaslibrary.github.io/"
