@@ -96,6 +96,37 @@ impl<T: Clone> Array<T> {
     ///
     /// * `indices` - vector of indices
     /// * `value` - value to fill it with
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// #[macro_use] extern crate numas;
+    /// use numas::array::Array;
+    ///
+    /// let f_array = Array::new(vec![1,2,3,4,5,6,7,8,9], vec![3,3]);
+    /// 
+    /// // first row
+    /// f_array.set(s![0], -1);
+    /// assert_eq!(f_array.collect(), vec![-1,-1,-1,4,5,6,7,8,9]);
+    ///
+    /// let s_array = Array::new(vec![1,2,3,4,5,6,7,8,9], vec![3,3]);
+    ///
+    /// // fist two rows
+    /// s_array.set(s![0 => 2], -1);
+    /// assert_eq!(s_array.collect(), vec![-1,-1,-1,-1,-1,-1,7,8,9]);
+    ///
+    /// let t_array = Array::new(vec![1,2,3,4,5,6,7,8,9], vec![3,3]);
+    ///
+    /// // second row, second column
+    /// t_array.set(s![1; 1], -1);
+    /// assert_eq!(t_array.collect(), vec![1,2,3,4,-1,6,7,8,9]);
+    ///
+    /// let x_array = Array::new(vec![1,2,3,4,5,6,7,8,9], vec![3,3]);
+    ///
+    /// // last row, two last columns
+    /// x_array.set(s![2; 1 => 3], -1);
+    /// assert_eq!(x_array.collect(), vec![1,2,3,4,5,6,7,-1,-1]);
+    /// ```
     pub fn set(&self, indices: Vec<usize>, value: T) -> () {
         self.check_indices_size(&indices);
 
