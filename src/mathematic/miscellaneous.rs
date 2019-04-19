@@ -8,7 +8,6 @@ impl<T> Array<T> where T: Clone + Into<f64> {
     ///
     /// ```
     ///  use numas::array::Array;
-    ///  use numas::shape::Shape;
     ///
     ///  let array = Array::new(vec![4, 9, 16, 25], vec![4]);
     ///  let sqrt_array = array.sqrt();
