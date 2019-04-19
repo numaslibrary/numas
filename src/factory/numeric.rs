@@ -7,6 +7,17 @@ use array::Array;
 /// * `start` - start of interval
 /// * `stop` - end of interval
 /// * `num` - number of elements
+///
+/// # Examples
+///
+/// ```
+///  use numas::array::Array;
+///
+///  let array = numas::factory::numeric::linspace(1.0, 5.0, 9);
+///  let data = array.collect();
+///
+///  assert_eq!(data, vec![1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]);
+/// ```
 pub fn linspace(start: f64, stop: f64, num: usize) -> Array<f64> {
     let mut data: Vec<f64> = Vec::with_capacity(num);
 
@@ -28,6 +39,17 @@ pub fn linspace(start: f64, stop: f64, num: usize) -> Array<f64> {
 /// * `start` - start of interval
 /// * `stop` - end of interval
 /// * `step` - step of interval
+///
+/// # Examples
+///
+/// ```
+///  use numas::array::Array;
+///
+///  let array = numas::factory::numeric::arange(1.0, 5.0, 1.5);
+///  let data = array.collect();
+///
+///  assert_eq!(data, vec![1.0, 2.5, 4.0]);
+/// ```
 pub fn arange(start: f64, stop: f64, step: f64) -> Array<f64> {
     let num = f64::ceil((stop - start) / step) as i32;
     let mut data: Vec<f64> = Vec::with_capacity(num as usize);
