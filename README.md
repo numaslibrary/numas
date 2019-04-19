@@ -59,7 +59,7 @@ modifying elements affects the origin array as well.
 let array = Array::new(vec![1,2,3,4,5,6,7,8,9], vec![9]);
 
 // Create view into array of index from 3 to 6 (elements 4,5,6,7)
-let mut view = array.get(s![3 => 6]);
+let mut view = array.get(s![3 => 7]);
 
 // Multiply view by 10, also possible to pass whole array with same shape as view
 view *= u![10];
@@ -70,17 +70,32 @@ view *= u![10];
 ```
 
 ### Macros
-Currently there are two macros `s` for convenient indexing of array and `u` for creating 'unit arrays'.
+Currently there are following macros:
 
 #### s
+Macro `s!` is for convenient indexing of an array. Example of usage is following
+
 ```rust
-let view = array.get(s![0, 1 => 2]);
-// Array view now contains first row of array columns from index 1 to 2 and its shape is onedimensional of length 2
+let view = array.get(s![0; 1 => 3]);
+// Array view now contains first row of array columns from index 1 to 3 (excluded) and its shape is onedimensional of length 2
 ```
 #### u
-Unit arrays are arrays of exactly one element with shape of one dimension of length one.
+Macro `u!` is for creating "unit arrays". Unit arrays are arrays of exactly one element with shape of one dimension of length one.
 ```rust
 let array = u![7];
 // Creates array of element 7
 // Equivalent would be Array::new(vec![7], vec![1]);
 ```
+
+#### tuple
+Macro `tuple!` is an internal macro used inside of `u!`. It is not supposed to be used by user. It pushes value with `0` to provided
+vector if only one value is provided. If two values are provided, it pushes both of them.
+```rust
+let mut vec: Vec<i32> = Vec::new();
+tuple![vec; 1, 5];
+// vec now contains [1, 5]
+
+tuple![vec; 6]
+// vec now contains [1, 5, 6, 0]
+```
+
