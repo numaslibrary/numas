@@ -70,28 +70,34 @@ impl Shape {
     /// # Arguments
     ///
     /// * `indices` - Indices
-    pub fn indices_to_shape(&self, indices: Vec<Vec<usize>>) -> Shape {
+    ///
+    /// # Example
+    pub fn indices_to_shape(&self, indices: Vec<usize>) -> Shape {
         let indices_len = indices.len();
         let shape_len = self.shape.len();
+        let indices_len_half = indices_len / 2;
 
-        let offset = self.start + indices
-            .iter()
-            .zip(self.strides.iter())
-            .fold(0, |acc, (i, s)| acc + s * i[0]);
+        let mut offset = self.start;
 
-        let shape = if indices_len != 0 && indices[indices_len - 1].len() == 2 {
-            let mut tmp: Vec<i32> = Vec::with_capacity(&shape_len - &indices_len + 1);
-            tmp.push((indices[indices_len - 1][1] - indices[indices_len - 1][0] + 1) as i32);
-            tmp.extend(self.shape.iter().skip(indices_len));
+        for i in 0..indices_len_half {
+            offset += indices[i * 2] * self.strides[i];
+        }
+
+        println!("{:?}", &indices);
+        let shape = if indices[indices_len - 1] != 0 {
+            let mut tmp: Vec<i32> = Vec::with_capacity(shape_len - indices_len_half + 1);
+            tmp.push((indices[indices_len - 1] - indices[indices_len - 2]) as i32);
+            tmp.extend(self.shape.iter().skip(indices_len_half));
             tmp
-        } else if indices_len == shape_len {
+        } else if indices_len_half == shape_len {
             vec![1]
         } else {
-            self.shape[indices_len..shape_len].to_vec()
+            self.shape[indices_len_half..shape_len].to_vec()
         };
 
-        let count = shape[0].clone() as usize * self.strides[self.strides.len() - shape.len()];
+        let count = shape[0].clone() as usize * self.strides[shape_len - shape.len()];
         let end = offset.clone() + count;
+
 
         return Shape::new(shape, offset.clone() as usize, end);
     }

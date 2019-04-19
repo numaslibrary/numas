@@ -78,14 +78,14 @@ impl<T: Clone> Array<T> {
     /// # Arguments
     ///
     /// * `indices` - Indices
-    fn check_indices_size(&self, indices: &Vec<Vec<usize>>) -> () {
+    fn check_indices_size(&self, indices: &Vec<usize>) -> () {
         let shape_len = self.shape.get_shape().len();
 
-        if indices.len() > shape_len {
+        if indices.len() / 2 > shape_len {
             panic!(
                 "Invalid indices given: shape dimensions {}, indices dimensions {}",
                 shape_len,
-                indices.len()
+                indices.len() / 2
             );
         }
     }
@@ -96,7 +96,7 @@ impl<T: Clone> Array<T> {
     ///
     /// * `indices` - vector of indices
     /// * `value` - value to fill it with
-    pub fn set(&self, indices: Vec<Vec<usize>>, value: T) -> () {
+    pub fn set(&self, indices: Vec<usize>, value: T) -> () {
         self.check_indices_size(&indices);
 
         let shape = self.shape.indices_to_shape(indices);
@@ -127,7 +127,28 @@ impl<T: Clone> Array<T> {
     /// # Arguments
     ///
     /// * `indices` - vector of indices
-    pub fn get(&self, indices: Vec<Vec<usize>>) -> Array<T> {
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// #[macro_use] extern crate numas;
+    /// use numas::array::Array;
+    ///
+    /// let array = Array::new(vec![1,2,3,4,5,6,7,8,9], vec![3,3]);
+    ///
+    /// // first row
+    /// assert_eq!(array.get(s![0]).collect(), vec![1,2,3]);
+    ///
+    /// // fist two rows
+    /// assert_eq!(array.get(s![0 => 2]).collect(), vec![1,2,3,4,5,6]);
+    ///
+    /// // second row, second column
+    /// assert_eq!(array.get(s![1; 1]).collect(), vec![5]);
+    ///
+    /// // last row, two last columns
+    /// assert_eq!(array.get(s![2; 1 => 3]).collect(), vec![8,9]);
+    /// ```
+    pub fn get(&self, indices: Vec<usize>) -> Array<T> {
         // Handle invalid indices length
         self.check_indices_size(&indices);
 
