@@ -83,7 +83,6 @@ impl Shape {
             offset += indices[i * 2] * self.strides[i];
         }
 
-        println!("{:?}", &indices);
         let shape = if indices[indices_len - 1] != 0 {
             let mut tmp: Vec<i32> = Vec::with_capacity(shape_len - indices_len_half + 1);
             tmp.push((indices[indices_len - 1] - indices[indices_len - 2]) as i32);
