@@ -1,6 +1,6 @@
 use array::Array;
 
-impl<T> Array<T> where T: Clone + Into<f64> {
+impl<T> Array<T> where T: Copy + Into<f64> {
     /// Applies hyperbolic sine on elements from given array and creates new array
     #[inline]
     pub fn sinh(&self) -> Array<f64> {

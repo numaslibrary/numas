@@ -95,11 +95,11 @@ impl Shape {
             self.shape[indices_len_half..shape_len].to_vec()
         };
 
-        let count = shape[0].clone() as usize * self.strides[shape_len - shape.len()];
-        let end = offset.clone() + count;
+        let count = shape[0] as usize * self.strides[shape_len - shape.len()];
+        let end = offset + count;
 
 
-        return Shape::new(shape, offset.clone() as usize, end);
+        return Shape::new(shape, offset as usize, end);
     }
 
     /// Returns bounds of shape

@@ -3,7 +3,7 @@ use array::Array;
 use std::cmp::PartialOrd;
 
 
-impl<T> Array<T> where T: Clone + PartialOrd {
+impl<T> Array<T> where T: Copy + PartialOrd {
     /// Returns array of 1s and 0s representing truth value of lesser than element wise
     ///
     /// # Arguments
@@ -31,7 +31,7 @@ impl<T> Array<T> where T: Clone + PartialOrd {
         let mut data: Vec<u8> = Vec::with_capacity(self.len());
 
         if other.shape.total_len() == 1 {
-            let value = second_data[other.shape.get_bounds().start].clone();
+            let value = second_data[other.shape.get_bounds().start];
 
             for f in self.shape.get_bounds() {
                 data.push(if first_data[f] < value { 1 } else { 0 });
@@ -72,7 +72,7 @@ impl<T> Array<T> where T: Clone + PartialOrd {
         let mut data: Vec<u8> = Vec::with_capacity(self.len());
 
         if other.shape.total_len() == 1 {
-            let value = second_data[other.shape.get_bounds().start].clone();
+            let value = second_data[other.shape.get_bounds().start];
 
             for f in self.shape.get_bounds() {
                 data.push(if first_data[f] <= value { 1 } else { 0 });
@@ -113,7 +113,7 @@ impl<T> Array<T> where T: Clone + PartialOrd {
         let mut data: Vec<u8> = Vec::with_capacity(self.len());
 
         if other.shape.total_len() == 1 {
-            let value = second_data[other.shape.get_bounds().start].clone();
+            let value = second_data[other.shape.get_bounds().start];
 
             for f in self.shape.get_bounds() {
                 data.push(if first_data[f] > value { 1 } else { 0 });
@@ -154,7 +154,7 @@ impl<T> Array<T> where T: Clone + PartialOrd {
         let mut data: Vec<u8> = Vec::with_capacity(self.len());
 
         if other.shape.total_len() == 1 {
-            let value = second_data[other.shape.get_bounds().start].clone();
+            let value = second_data[other.shape.get_bounds().start];
 
             for f in self.shape.get_bounds() {
                 data.push(if first_data[f] >= value { 1 } else { 0 });
@@ -169,7 +169,7 @@ impl<T> Array<T> where T: Clone + PartialOrd {
     }
 }
 
-impl<T> Array<T> where T: Clone + PartialEq {
+impl<T> Array<T> where T: Copy + PartialEq {
     /// Returns array of 1s and 0s representing truth value of equality element wise
     ///
     /// # Arguments
@@ -197,7 +197,7 @@ impl<T> Array<T> where T: Clone + PartialEq {
         let mut data: Vec<u8> = Vec::with_capacity(self.len());
 
         if other.shape.total_len() == 1 {
-            let value = second_data[other.shape.get_bounds().start].clone();
+            let value = second_data[other.shape.get_bounds().start];
 
             for f in self.shape.get_bounds() {
                 data.push(if first_data[f] == value { 1 } else { 0 });
@@ -238,7 +238,7 @@ impl<T> Array<T> where T: Clone + PartialEq {
         let mut data: Vec<u8> = Vec::with_capacity(self.len());
 
         if other.shape.total_len() == 1 {
-            let value = second_data[other.shape.get_bounds().start].clone();
+            let value = second_data[other.shape.get_bounds().start];
 
             for f in self.shape.get_bounds() {
                 data.push(if first_data[f] != value { 1 } else { 0 });

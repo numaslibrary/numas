@@ -6,12 +6,12 @@ use shape::Shape;
 
 
 /// Array structure
-pub struct Array<T: Clone> {
+pub struct Array<T: Copy> {
     pub data: Rc<RefCell<Vec<T>>>,
     pub shape: Shape,
 }
 
-impl<T: Clone> Array<T> {
+impl<T: Copy> Array<T> {
     /// Creates new bounded array
     ///
     /// # Arguments
@@ -134,7 +134,7 @@ impl<T: Clone> Array<T> {
         let mut data = self.data.borrow_mut();
 
         for i in shape.get_bounds() {
-            data[i] = value.clone();
+            data[i] = value;
         }
     }
 
@@ -147,7 +147,7 @@ impl<T: Clone> Array<T> {
         let mut data = self.data.borrow_mut();
 
         for i in self.shape.get_bounds() {
-            data[i] = value.clone();
+            data[i] = value;
         }
 
         return self;
@@ -233,7 +233,7 @@ impl<T: Clone> Array<T> {
     }
 }
 
-impl<T: Clone> Clone for Array<T> {
+impl<T: Copy> Clone for Array<T> {
     /// Clones array object
     fn clone(&self) -> Array<T> {
         let data = self.data.borrow().to_vec().clone();
@@ -245,7 +245,7 @@ impl<T: Clone> Clone for Array<T> {
     }
 }
 
-impl <T: fmt::Debug + Clone> fmt::Debug for Array<T> {
+impl <T: fmt::Debug + Copy> fmt::Debug for Array<T> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let data = self.data.borrow();
         return write!(f, "data: \t{:?}\nshape: \t{:?}", &data[self.shape.get_bounds()], self.get_shape());

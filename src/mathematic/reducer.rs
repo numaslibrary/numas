@@ -2,7 +2,7 @@ use std::ops::{AddAssign, MulAssign};
 use array::Array;
 
 
-impl<T> Array<T> where T: Clone + From<u8> {
+impl<T> Array<T> where T: Copy + From<u8> {
     /// Returns sums of all elements in array or view
     ///
     /// # Examples
@@ -19,7 +19,7 @@ impl<T> Array<T> where T: Clone + From<u8> {
         let mut accumulator = T::from(0 as u8);
 
         for i in self.shape.get_bounds() {
-            accumulator += data[i].clone();
+            accumulator += data[i];
         }
 
         return accumulator;
@@ -45,7 +45,7 @@ impl<T> Array<T> where T: Clone + From<u8> {
         let mut accumulator = T::from(1 as u8);
 
         for i in self.shape.get_bounds() {
-            accumulator *= data[i].clone();
+            accumulator *= data[i];
         }
 
         return accumulator;

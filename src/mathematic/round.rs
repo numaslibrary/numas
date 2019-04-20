@@ -1,7 +1,7 @@
 use array::Array;
 
 
-impl<T> Array<T> where T: Clone + Into<f64> {
+impl<T> Array<T> where T: Copy + Into<f64> {
     /// Applies rounding on elements from given array and creates new array
     ///
     /// # Examples

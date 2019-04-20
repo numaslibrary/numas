@@ -18,7 +18,7 @@ use array::Array;
 /// * `distr` - distribution of random values
 /// * `shape` - shape of new array
 pub fn random_from_distribution<T, D>(distr: D, shape: Vec<i32>) -> Array<T>
-    where T: Clone, D: Distribution<T>
+    where T: Copy, D: Distribution<T>
 {
     let mut rng = rand::thread_rng();
 
@@ -37,7 +37,7 @@ pub fn random_from_distribution<T, D>(distr: D, shape: Vec<i32>) -> Array<T>
 /// * `shape` - shape of new array
 #[inline]
 pub fn random_range<T>(from: T, to: T, shape: Vec<i32>) -> Array<T>
-    where T: rand::distributions::uniform::SampleUniform + Clone
+    where T: rand::distributions::uniform::SampleUniform + Copy
 {
     return random_from_distribution(Uniform::new::<T, T>(from, to), shape);
 }
@@ -49,7 +49,7 @@ pub fn random_range<T>(from: T, to: T, shape: Vec<i32>) -> Array<T>
 /// * `shape` - shape of new array
 #[inline]
 pub fn random<T>(shape: Vec<i32>) -> Array<T>
-    where T: rand::distributions::uniform::SampleUniform + From<u8> + Clone
+    where T: rand::distributions::uniform::SampleUniform + From<u8> + Copy
 {
     return random_range::<T>(T::from(0), T::from(1), shape);
 }

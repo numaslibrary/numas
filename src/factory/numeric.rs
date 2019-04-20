@@ -56,8 +56,8 @@ pub fn arange(start: f64, stop: f64, step: f64) -> Array<f64> {
     let mut tmp = start;
 
     for _ in 0..num {
-        data.push(tmp.clone());
-        tmp = tmp + step.clone();
+        data.push(tmp);
+        tmp = tmp + step;
     }
 
     return Array::new(data, vec![num]);

@@ -2,7 +2,7 @@ use array::Array;
 use std::f64::consts::E;
 
 
-impl<T> Array<T> where T: Clone + Into<f64> {
+impl<T> Array<T> where T: Copy + Into<f64> {
     /// Applies logarithm with given base on elements from given array and creates new array
     #[inline]
     pub fn log(&self, base: f64) -> Array<f64> {

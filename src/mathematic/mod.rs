@@ -8,7 +8,7 @@ use array::Array;
 /// * `array` - source array
 /// * `function` - function to apply
 fn apply<T, S, R>(array: &Array<T>, function: S ) -> Array<R>
-    where T: Clone, R: Clone, S: FnMut(&T) -> R,
+    where T: Copy, R: Copy, S: FnMut(&T) -> R,
 {
         let old_data = array.data.borrow();
         let data: Vec<R> = old_data[array.shape().get_bounds()].iter().map(function).collect();
