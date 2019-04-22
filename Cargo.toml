@@ -1,6 +1,6 @@
 [package]
 name = "numas"
-version = "0.2.3"
+version = "0.2.4"
 authors = ["Lukáš Zahradník <LukasZahradnik96@seznam.cz>"]
 description = "numas library is implementation of multidimensional array for efficient computing"
 homepage = "https://numaslibrary.github.io/"
@@ -11,7 +11,7 @@ categories = ["data-structures", "science"]
 license = "MIT"
 
 [badges]
-maintenance = { status = "actively-developed"}
+maintenance = { status = "actively-developed" }
 
 [dependencies]
 rand = "0.6.5"
