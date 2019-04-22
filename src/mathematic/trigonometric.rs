@@ -13,6 +13,12 @@ impl<T> Array<T> where T: Copy + Into<f64> {
         return super::apply(&self, |value: &T| f64::cos(value.clone().into()));
     }
 
+    /// Applies tangent on elements from given array and creates new array
+    #[inline]
+    pub fn tan(&self) -> Array<f64> {
+        return super::apply(&self, |value: &T| f64::tan(value.clone().into()));
+    }
+
     /// Applies inverse sine on elements from given array and creates new array
     #[inline]
     pub fn arcsin(&self) -> Array<f64> {
