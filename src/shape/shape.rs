@@ -56,6 +56,15 @@ impl Shape {
     /// * `shape` - New shape matrix
     pub fn set_shape(&mut self, shape: Vec<i32>) -> () {
         self.strides = Shape::calculate_strides(&shape);
+
+        if Shape::len(&shape, &self.strides) != (self.end - self.start) as i32 {
+            panic!(
+                "Invalid shape given: shape size {}, data size {}",
+                Shape::len(&shape, &self.strides),
+                self.end - self.start
+            );
+        }
+
         self.shape = shape;
     }
 
