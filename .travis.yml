@@ -5,7 +5,7 @@ script:
 - cargo build --verbose --all
 - cargo test --verbose --all
 cache: cargo
-before_deploy:
+before_script:
   "sed 's|<<VERSION>>|$TRAVIS_TAG|g' ./Cargo.toml"
 deploy:
   provider: cargo
