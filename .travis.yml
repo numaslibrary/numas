@@ -11,4 +11,6 @@ deploy:
   provider: cargo
   token:
     secure: $CARGO_SECRET
+  on:
+    tags: true
   
