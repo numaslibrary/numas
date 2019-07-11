@@ -1,4 +1,8 @@
 # numas
+[![Build Status](https://travis-ci.com/numaslibrary/numas.svg?branch=master)](https://travis-ci.com/numaslibrary/numas)
+[![](http://meritbadge.herokuapp.com/numas)](https://crates.io/crates/numas)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 numas is Rust library implementing n-dimensional array for generic types.
 
 #### New in numas 0.2.0
