@@ -1,16 +1,11 @@
 language: rust
 rust:
-- stable
+  - stable
+  - nightly
+  - beta
 script:
-- cargo build --verbose --all
-- cargo test --verbose --all
+  - rustc --version
+  - cargo --version
+  - cargo build --verbose --all
+  - cargo test --verbose --all
 cache: cargo
-before_script:
-  sed "s|<<VERSION>>|$TRAVIS_TAG|g" ./Cargo.toml
-deploy:
-  provider: cargo
-  token:
-    secure: $CARGO_SECRET
-  on:
-    tags: true
-  
