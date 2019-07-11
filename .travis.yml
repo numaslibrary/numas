@@ -6,7 +6,7 @@ script:
 - cargo test --verbose --all
 cache: cargo
 before_script:
-  "sed 's|<<VERSION>>|${TRAVIS_TAG}|g' ./Cargo.toml"
+  sed 's|<<VERSION>>|${TRAVIS_TAG}|g' ./Cargo.toml
 deploy:
   provider: cargo
   token:
