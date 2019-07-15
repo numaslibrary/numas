@@ -5,18 +5,8 @@
 
 numas is Rust library implementing n-dimensional array for generic types.
 
-#### New in numas 0.2.0
-- Exponential functions
-- Added more examples
-
-#### New in numas 0.1.9
-- Rounding functions
-- Logarithm functions
-- Bug fixes
-
 ## Content
 
-Library contains:
 - Multidimensional array support
 - Multidimensional view support
 - Random factories, fillers and other factories
@@ -35,8 +25,11 @@ let array = Array::new(vec![1,2,3,4,5,6], vec![2, 3]);
 
 ### Reshaping
 Sometimes is needed to change shape of an array. Actually there are two ways of doing that.
-First one is via method `reshape` which returns array that it's called on enabling fluent/builder pattern interface.
-Second one is method `set_shape` which just sets shape and doesnt return anything.
+
+- `reshape`
+Using `reshape` returns array which method is called on. This behavior enables fluent/builder pattern interface resulting in method chaining posibility.
+- `set_shape`
+Method `set_shape` only sets shape and has no return value.
 
 ### Functions
 The majority of functions are accessible via an array instance.
