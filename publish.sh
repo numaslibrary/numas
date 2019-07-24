@@ -9,10 +9,7 @@ sed -i "s/version = \"[0-9\.]*\"/version = \"$VERSION\"/gi" ./Cargo.toml
 # commit Cargo.toml with the new version
 git add ./Cargo.toml
 git commit -m "Update to version $VERSION"
-
-# create tag
-git tag $VERSION
-git push --tags
+git push
 
 # publish to crates.io
 cargo publish
